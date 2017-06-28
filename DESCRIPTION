@@ -1,0 +1,15 @@
+Package: bacteriaSourceModels
+Type: Package
+Title: Models for estimation of bacteria loads  from several sources
+Version: 0.1.0
+Author: Kevin Brannan
+Maintainer: Kevin Brannan <brannan.kevin@deq.state.or.us>
+Description: Models estimate bacteria load from a source over a year. 
+    Endpoints of the bacteria load include land surface, directly-to-stream, 
+    storage (manure for agriculturla sources), and die-off. The models 
+    do not simulate transport of the bacteria via runoff or any other 
+    hydrologic process. We developed the models for use with PEST and HSPF. 
+License: GPL (>= 2)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
