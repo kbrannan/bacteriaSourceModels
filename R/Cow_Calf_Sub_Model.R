@@ -1,6 +1,6 @@
-#'  model bacteria generation from cow-calf agricultural operation
+#' model bacteria generation from cow-calf agricultural operation
 #'
-#'  This function is the bacteria source-model cow-calf systems
+#' This function is the bacteria source-model cow-calf systems
 #' and generates input for HSPF. The specific outputs from
 #' this source model are loads from the cow-calf system to the land
 #' and directly to the stream. The load to the land is in the form
@@ -12,9 +12,10 @@
 #' The function returns a data.frame with populations for different
 #' locations in the sub-watershed along with the associated bacteria loads.
 #' @param chr.input.file is the input file for the model
+#' @param sub is the sub-watershed for the input file, default is NULL
 #' @export
 
-cow.calf <- function(chr.input.file) {
+cow.calf <- function(chr.input.file, sub = NULL) {
 
   ## read input file
   df.input <- read.delim(chr.input.file,
@@ -133,33 +134,25 @@ cow.calf <- function(chr.input.file) {
   ##
   ## SubModelOutput => df.output
   df.output <- data.frame(
-    Month = c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep",
-            "Oct","Nov","Dec"),
-    NumOfPairs = am.pairs * rep(1,12),
-    AUvsTime = am.pairs.adj,
-    pairs.OnPastureWOStreamAccess = loc.pasture.wo,
-    pairs.OnPastureWStreamAccess = loc.pasture.w.lnd,
-    pairs.OnPastureInStream = loc.pasture.w.strm,
-    pairs.InConfinementvsTime = loc.confine,
-    pairs.InForestWOStreamAccess = loc.forest.wo,
-    pairs.InForestWStreamAccess = loc.forest.w.lnd,
-    pairs.InForestInStream = loc.forest.w.strm,
-
-    Bacteria.OnPastureWOStreamAccess = bac.pasture.wo,
-    Bacteria.OnPastureWStreamAccess = bac.pasture.w.lnd,
-    Bacteria.OnPastureInStream = bac.pasture.w.strm,
-    Bacteria.InConfinementvsTime = bac.confine,
-    Bacteria.InForest = bac.forest.lnd,
-    Bacteria.InForestInStream = bac.forest.w.strm,
-
+    Month = format(as.POSIXct(paste0("1967-",1:12,"-01")), format = "%b"),
+    num.of.pairs = am.pairs * rep(1,12),
+    au = am.pairs.adj,
+    pairs.on.pasture.on.land = loc.pasture.wo + loc.pasture.w.lnd,
+    pairs.on.pasture.in.stream = loc.pasture.w.strm,
+    pairs.in.confinement = loc.confine,
+    pairs.in.forest.on.land = loc.forest.wo + loc.forest.w.lnd,
+    pairs.in.forest.in.stream = loc.forest.w.strm,
+    Bacteria.on.pasture.on.land = bac.pasture.wo + bac.pasture.w.lnd,
+    Bacteria.on.pasture.to.stream = bac.pasture.w.strm,
+    Bacteria.in.confinement = bac.confine,
+    Bacteria.in.forest.on.land = bac.forest.lnd + bac.forest.w.strm,
+    Bacteria.in.forest.to.stream  = bac.forest.w.strm,
     Bacteria.direct.to.stream = bac.strm,
-    Accum.Pasture = accum.pasture,
-    Accum.Forest = accum.forest,
-
-    Lim.Pasture = ainfo.sqolim.fac * bac.pasture.lnd / lu.pasture.area,
-    Lim.Forest = ainfo.sqolim.fac * bac.forest.lnd / lu.forest.area,
+    Accum.pasture = accum.pasture,
+    Accum.forest = accum.forest,
+    Lim.pasture = ainfo.sqolim.fac * bac.pasture.lnd / lu.pasture.area,
+    Lim.forest = ainfo.sqolim.fac * bac.forest.lnd / lu.forest.area,
     stringsAsFactors = FALSE)
-
 
 
   return(df.output)
