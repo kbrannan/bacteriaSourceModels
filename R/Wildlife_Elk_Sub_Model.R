@@ -182,7 +182,6 @@ wildlife.Elk <- function(chr.file.input) {
 ## Assemble output data frame
   ## season 1
   df.output.season.1 <- data.frame(
-    sub = chr.sub,
     Month=format(as.POSIXct(paste0("1967-",amn.months.season.1,"-01")), format = "%b"),
     pop.total=pop.total.season.1,
     pop.on.land=pop.total.on.land.season.1,
@@ -198,7 +197,6 @@ wildlife.Elk <- function(chr.file.input) {
     stringsAsFactors=FALSE)
   ## season 1
   df.output.season.2 <- data.frame(
-    sub = chr.sub,
     Month=format(as.POSIXct(paste0("1967-",amn.months.season.2,"-01")), format = "%b"),
     pop.total=pop.total.season.2,
     pop.on.land=pop.total.on.land.season.2,
@@ -220,7 +218,7 @@ wildlife.Elk <- function(chr.file.input) {
   ## these NaN with 0
   df.nan <- df.output[, -1]
   df.nan[is.na(df.nan)] <- 0
-    df.output <- cbind(Month=df.output[, "Month"], df.nan)
+  df.output <- cbind(sub = chr.sub, Month=df.output[, "Month"], df.nan)
 
   ##
   ## return results
