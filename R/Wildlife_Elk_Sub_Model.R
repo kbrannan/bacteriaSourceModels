@@ -15,17 +15,20 @@
 #' @param chr.input.file is the input file for the model
 #' @export
 
-wildlifeElk <- function(chr.input.file) {
+wildlifeElk <- function(chr.file.input) {
 
     ## read input files
-  df.input <- read.delim(chr.input.file, sep=":",
+  df.input <- read.delim(chr.file.input, sep=":",
                          comment.char="*", stringsAsFactors=FALSE,
                          header=FALSE)
   names(df.input) <- c("parameter","value(s)")
 
   ##
-  ## Getting input parameter values
-  ##
+  ## set values for variables
+
+  ## get sub watershed number
+  chr.sub <- gsub("[^0-1]", "" , df.input[df.input$parameter == "Watershed", "value"])
+
   ## land use information
   lu.pasture.area.season.1   <- as.numeric(df.input$value[
     df.input$parameter == "Season 1 Pasture Area in Watershed (ac)"])
@@ -179,6 +182,7 @@ wildlifeElk <- function(chr.input.file) {
 ## Assemble output data frame
   ## season 1
   df.output.season.1 <- data.frame(
+    sub = chr.sub,
     Month=format(as.POSIXct(paste0("1967-",amn.months.season.1,"-01")), format = "%b"),
     pop.total=pop.total.season.1,
     pop.on.land=pop.total.on.land.season.1,
@@ -194,6 +198,7 @@ wildlifeElk <- function(chr.input.file) {
     stringsAsFactors=FALSE)
   ## season 1
   df.output.season.2 <- data.frame(
+    sub = chr.sub,
     Month=format(as.POSIXct(paste0("1967-",amn.months.season.2,"-01")), format = "%b"),
     pop.total=pop.total.season.2,
     pop.on.land=pop.total.on.land.season.2,
@@ -216,6 +221,8 @@ wildlifeElk <- function(chr.input.file) {
   df.nan <- df.output[, -1]
   df.nan[is.na(df.nan)] <- 0
     df.output <- cbind(Month=df.output[, "Month"], df.nan)
-  ### return results
+
+  ##
+  ## return results
   return(df.output)
 }

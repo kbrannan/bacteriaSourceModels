@@ -15,15 +15,18 @@
 #' @param chr.input.file is the input file for the model
 #' @export
 
-wildlifeBeaver <- function(chr.input.file) {
+wildlifeBeaver <- function(chr.file.input) {
 
-  df.input <- read.delim(chr.input.file, sep=":",
+  df.input <- read.delim(chr.file.input, sep=":",
                           comment.char="*", stringsAsFactors=FALSE,
                           header=FALSE)
   names(df.input) <- c("parameter","value(s)")
 
 ##
 ## set values for variables
+
+  ## get sub watershed number
+  chr.sub <- gsub("[^0-1]", "" , df.input[df.input$parameter == "Watershed", "value"])
 
 ## land use information
   ### Habitat (only forest)
@@ -61,7 +64,8 @@ wildlifeBeaver <- function(chr.input.file) {
   ##
   ## Assemble output data frame
   df.output <- data.frame(
-    Month=format(as.POSIXct(paste0("1967-",1:12,"-01")), format = "%b"),
+    sub = chr.sub,
+    Month = format(as.POSIXct(paste0("1967-",1:12,"-01")), format = "%b"),
     pop.total=pop.total,
     pop.on.land=pop.on.land,
     pop.in.stream=pop.in.stream,
@@ -72,5 +76,7 @@ wildlifeBeaver <- function(chr.input.file) {
     Lim.forest=amn.SQLIM.factor * accum.forest,
     stringsAsFactors=FALSE)
 
+  ##
+  ### return results
   return(df.output)
 }

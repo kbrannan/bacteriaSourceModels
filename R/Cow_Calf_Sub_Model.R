@@ -15,16 +15,20 @@
 #' @param sub is the sub-watershed for the input file, default is NULL
 #' @export
 
-cow.calf <- function(chr.input.file, sub = NULL) {
+cow.calf <- function(chr.file.input, sub = NULL) {
 
   ## read input file
-  df.input <- read.delim(chr.input.file,
+  df.input <- read.delim(chr.file.input,
                          sep=":", comment.char="*", stringsAsFactors=FALSE,
                          header=FALSE)
   names(df.input) <- c("parameter","value")
 
 
 ## set values for variables
+
+## get sub watershed number
+  chr.sub <- gsub("[^0-1]", "" , df.input[df.input$parameter == "Watershed", "value"])
+
 
 ## land use information
   ## pasture area
@@ -134,6 +138,7 @@ cow.calf <- function(chr.input.file, sub = NULL) {
   ##
   ## SubModelOutput => df.output
   df.output <- data.frame(
+    sub = chr.sub,
     Month = format(as.POSIXct(paste0("1967-",1:12,"-01")), format = "%b"),
     num.of.pairs = am.pairs * rep(1,12),
     au = am.pairs.adj,
@@ -154,7 +159,7 @@ cow.calf <- function(chr.input.file, sub = NULL) {
     Lim.forest = ainfo.sqolim.fac * bac.forest.lnd / lu.forest.area,
     stringsAsFactors = FALSE)
 
-
+  ##
+  ### return results
   return(df.output)
-
 }

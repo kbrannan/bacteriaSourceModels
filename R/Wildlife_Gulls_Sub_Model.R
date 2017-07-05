@@ -15,16 +15,19 @@
 #' @param chr.input.file is the input file for the model
 #' @export
 
-wildlifeGulls <- function(chr.input.file) {
+wildlifeGulls <- function(chr.file.input) {
 
   ## read input files
-  df.input <- read.delim(chr.input.file, sep=":",
+  df.input <- read.delim(chr.file.input, sep=":",
                          comment.char="*", stringsAsFactors=FALSE,
                          header=FALSE)
   names(df.input) <- c("parameter","value(s)")
 
   ##
   ## set values for variables
+
+  ## get sub watershed number
+  chr.sub <- gsub("[^0-1]", "" , df.input[df.input$parameter == "Watershed", "value"])
 
   ## land use information
   lu.pasture.area   <- as.numeric(df.input$value[
@@ -114,6 +117,7 @@ wildlifeGulls <- function(chr.input.file) {
   ##
   ## Assemble output data frame
   df.output <- data.frame(
+    sub = chr.sub,
     Month=format(as.POSIXct(paste0("1967-",1:12,"-01")), format = "%b"),
     pop.total=pop.total,
     pop.on.land=pop.on.land,
@@ -129,5 +133,7 @@ wildlifeGulls <- function(chr.input.file) {
     Lim.RAOCUT=amn.SQLIM.factor * accum.RAOCUT,
     stringsAsFactors=FALSE)
 
+  ##
+  ### return results
   return(df.output)
 }

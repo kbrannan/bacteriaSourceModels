@@ -16,14 +16,17 @@
 #' @param chr.input.file is the input file for the model
 #' @export
 
-onsite_pets <- function(chr.input.file) {
+onsite_pets <- function(chr.file.input) {
 
 ## read input file
-  df.input <- read.delim(chr.input.file, sep=":", comment.char="*",
+  df.input <- read.delim(chr.file.input, sep=":", comment.char="*",
                          stringsAsFactors=FALSE, header=FALSE)
   names(df.input) <- c("parameter","value(s)")
 
 ## set values for variables
+
+## get sub watershed number
+  chr.sub <- gsub("[^0-1]", "" , df.input[df.input$parameter == "Watershed", "value"])
 
 ## land use information
   ## developed area
@@ -94,26 +97,29 @@ onsite_pets <- function(chr.input.file) {
   }
   ##
   ### Assemble output data frame
-  df.output <- data.frame(Month=c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"),
-                               pop.pet.total=pets.pop,
-					              		   num.onsite.NearStrmStrctPre1974=onsite.NearStrmStrctPre1974,
-					              		   num.onsite.NearStrmStrct1974to1986=onsite.NearStrmStrct1974to1986,
-				              			   num.onsite.NearStrmStrctPost1986=onsite.NearStrmStrctPost1986,
-					              		   num.onsite.NearStrmStrct=onsite.NearStrmStrct,
-							                 num.onsite.NearStrmStrctFailurePre1974=onsite.NearStrmStrctFailurePre1974,
-							                 num.onsite.NearStrmStrctFailure1974to1986=onsite.NearStrmStrctFailure1974to1986,
-						              	   num.onsite.NearStrmStrctFailurePost1986=onsite.NearStrmStrctFailurePost1986,
-							                 num.onsite.NearStrmStrctFailure=onsite.NearStrmStrctFailure,
-					              		   num.onsite.NearStrmStrctFailureInStream=onsite.NearStrmStrctFailureInStream,
-							                 Bacteria.pets.load=pets.bacteria.load,
-					              		   Bacteria.onsite.NearStrmStrctFailurePre1974=onsite.NearStrmStrctFailurePre1974.load,
-					              		   Bacteria.onsite.NearStrmStrctFailure1974to1986=onsite.NearStrmStrctFailure1974to1986.load,
-					              		   Bacteria.onsite.NearStrmStrctFailurePost1986=onsite.NearStrmStrctFailurePost1986.load,
-					              		   Bacteria.onsite.NearStrmStrctFailure=onsite.NearStrmStrctFailure.load,
-					              		   Bacteria.direct.to.stream=onsite.NearStrmStrctFailure.to.stream.load,
-                               Accum.RAOCUT=Accum.RAOCUT,
-					              		   Lim.RAOCUT=all.SQLIMFactor * Accum.RAOCUT,
-                               stringsAsFactors=FALSE)
+  df.output <- data.frame(
+    sub = chr.sub,
+    Month = format(as.POSIXct(paste0("1967-",1:12,"-01")), format = "%b"),
+    pop.pet.total=pets.pop,
+    num.onsite.NearStrmStrctPre1974=onsite.NearStrmStrctPre1974,
+    num.onsite.NearStrmStrct1974to1986=onsite.NearStrmStrct1974to1986,
+    num.onsite.NearStrmStrctPost1986=onsite.NearStrmStrctPost1986,
+    num.onsite.NearStrmStrct=onsite.NearStrmStrct,
+    num.onsite.NearStrmStrctFailurePre1974=onsite.NearStrmStrctFailurePre1974,
+    num.onsite.NearStrmStrctFailure1974to1986=onsite.NearStrmStrctFailure1974to1986,
+    num.onsite.NearStrmStrctFailurePost1986=onsite.NearStrmStrctFailurePost1986,
+    num.onsite.NearStrmStrctFailure=onsite.NearStrmStrctFailure,
+    num.onsite.NearStrmStrctFailureInStream=onsite.NearStrmStrctFailureInStream,
+    Bacteria.pets.load=pets.bacteria.load,
+    Bacteria.onsite.NearStrmStrctFailurePre1974=onsite.NearStrmStrctFailurePre1974.load,
+    Bacteria.onsite.NearStrmStrctFailure1974to1986=onsite.NearStrmStrctFailure1974to1986.load,
+    Bacteria.onsite.NearStrmStrctFailurePost1986=onsite.NearStrmStrctFailurePost1986.load,
+    Bacteria.onsite.NearStrmStrctFailure=onsite.NearStrmStrctFailure.load,
+    Bacteria.direct.to.stream=onsite.NearStrmStrctFailure.to.stream.load,
+    Accum.RAOCUT=Accum.RAOCUT,
+    Lim.RAOCUT=all.SQLIMFactor * Accum.RAOCUT,
+    stringsAsFactors=FALSE)
+
   ##
   ### return results
   return(df.output)
