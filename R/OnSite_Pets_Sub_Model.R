@@ -16,17 +16,17 @@
 #' @param chr.input.file is the input file for the model
 #' @export
 
-onsite_pets <- function(chr.file.input) {
+onsite.pets <- function(chr.file.input) {
 
 ## read input file
   df.input <- read.delim(chr.file.input, sep=":", comment.char="*",
                          stringsAsFactors=FALSE, header=FALSE)
-  names(df.input) <- c("parameter","value(s)")
+  names(df.input) <- c("parameter","value")
 
 ## set values for variables
 
 ## get sub watershed number
-  chr.sub <- gsub("[^0-1]", "" , df.input[df.input$parameter == "Watershed", "value"])
+  chr.sub <- gsub("([^0-9]){1, }", "" , df.input[df.input$parameter == "Watershed", "value"])
 
 ## land use information
   ## developed area

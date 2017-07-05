@@ -12,10 +12,9 @@
 #' The function returns a data.frame with populations for different
 #' locations in the sub-watershed along with the associated bacteria loads.
 #' @param chr.input.file is the input file for the model
-#' @param sub is the sub-watershed for the input file, default is NULL
 #' @export
 
-cow.calf <- function(chr.file.input, sub = NULL) {
+cow.calf <- function(chr.file.input) {
 
   ## read input file
   df.input <- read.delim(chr.file.input,
@@ -27,7 +26,7 @@ cow.calf <- function(chr.file.input, sub = NULL) {
 ## set values for variables
 
 ## get sub watershed number
-  chr.sub <- gsub("[^0-1]", "" , df.input[df.input$parameter == "Watershed", "value"])
+  chr.sub <- gsub("([^0-9]){1, }", "" , df.input[df.input$parameter == "Watershed", "value"])
 
 
 ## land use information
