@@ -4,7 +4,7 @@
 \alias{cow.calf}
 \title{model bacteria generation from cow-calf agricultural operation}
 \usage{
-cow.calf(chr.input.file)
+cow.calf(chr.file.input)
 }
 \arguments{
 \item{chr.input.file}{is the input file for the model}
