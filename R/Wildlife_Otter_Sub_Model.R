@@ -11,7 +11,7 @@
 #' the input file is "***". The definitions for the symbols used in
 #' the template are: YYYY is four-digit year, MM two-digit month,
 #' DD is the two-digit day, ## is an integer, #.# is a floating point
-#' number, end #.#E+## is a number in scientific notation
+#' number, and #.#E+## is a number in scientific notation
 #' @param chr.input.file is the input file for the model
 #' @export
 
