@@ -1,2 +1,2 @@
-importFrom("utils", "read.delim")
+importFrom("utils", "read.delim", "bacteriaSourceModels)
 exportPattern("^[[:alpha:]]+")
