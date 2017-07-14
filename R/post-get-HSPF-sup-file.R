@@ -1,9 +1,6 @@
-#' get reads in HSPF-sup-file and returns
+#' get reads in HSPF-sup-file and returns a long-format data.frame with accum and sqolim info
 #'
 #' @param chr.file.sup is the file name for the HSPF-sup-file (includes path if necessary)
-#' @param df.out is data.frame from "run.model.source.subs" function
-#' @param chr.col.name is the name of the column that has the HSPF  input either "accum", "lim", or "mutsin"
-#' @importFrom doBy summaryBy
 #' @export
 
 post.get.HSPF.sup.file <- function(chr.file.sup) {
