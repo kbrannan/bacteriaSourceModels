@@ -11,13 +11,13 @@
 #' ":" is used to seperate parameter names or descriptions from values.
 #' The function returns a data.frame with populations for different
 #' locations in the sub-watershed along with the associated bacteria loads.
-#' @param chr.input.file is the input file for the model
+#' @param chr.file.input is the input file for the model
 #' @export
 
 cow.calf <- function(chr.file.input) {
 
   ## read input file
-  df.input <- read.delim(chr.file.input,
+  df.input <- utils::read.delim(chr.file.input,
                          sep=":", comment.char="*", stringsAsFactors=FALSE,
                          header=FALSE)
   names(df.input) <- c("parameter","value")

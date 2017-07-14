@@ -1,6 +1,7 @@
 library(bacteriaSourceModels)
+
 chr.sub.models <- as.character(lsf.str("package:bacteriaSourceModels"))
-library(reshape2)
+chr.sub.models <- grep("post", chr.sub.models, invert = TRUE, value = TRUE)
 
 chr.dir.sub.models <- "M:/Models/Bacteria/HSPF/bacteria-sub-model-testing/SourceControl/sub-models"
 
@@ -10,27 +11,27 @@ chr.dirs.sub.models <- grep("General", chr.dirs.sub.models[nchar(chr.dirs.sub.mo
 df.models <- data.frame(model = chr.sub.models, dir = chr.dirs.sub.models, stringsAsFactors = FALSE)
 
 
-run.model.source <- function(chr.file.input, chr.model) {
-  eval(parse(text = paste0("df.cur <- ", chr.model, "('", chr.file.input, "')")))
-  return(df.cur)
-}
-
-run.model.source.subs <- function(chr.model, chr.dir.sub.model) {
-  library(reshape2)
-  chr.files.input <- list.files(path = chr.dir.sub.model, pattern = "*\\.txt",
-                                full.names = TRUE)
-  df.cur <- do.call(rbind,lapply(chr.files.input, run.model.source, chr.model))
-  df.r.cur <- melt(df.cur, id = c("sub", "Month"))
-  df.r.cur$variable <- as.character(df.r.cur$variable)
-  df.out <- data.frame(df.r.cur[, c(1,2)], source = chr.model, df.r.cur[, c(-1,-2)],
-                  stringsAsFactors = FALSE)
-  return(df.out)
-}
+# run.model.source <- function(chr.file.input, chr.model) {
+#   eval(parse(text = paste0("df.cur <- ", chr.model, "('", chr.file.input, "')")))
+#   return(df.cur)
+# }
+#
+# run.model.source.subs <- function(chr.model, chr.dir.sub.model) {
+#   library(reshape2)
+#   chr.files.input <- list.files(path = chr.dir.sub.model, pattern = "*\\.txt",
+#                                 full.names = TRUE)
+#   df.cur <- do.call(rbind,lapply(chr.files.input, run.model.source, chr.model))
+#   df.r.cur <- melt(df.cur, id = c("sub", "Month"))
+#   df.r.cur$variable <- as.character(df.r.cur$variable)
+#   df.out <- data.frame(df.r.cur[, c(1,2)], source = chr.model, df.r.cur[, c(-1,-2)],
+#                   stringsAsFactors = FALSE)
+#   return(df.out)
+# }
 
 df.out <- data.frame()
 
 for(kk in 1:length(df.models$model)) {
-  df.cur <- run.model.source.subs(df.models$model[kk],paste0(chr.dir.sub.models,"/", df.models$dir[kk]))
+  df.cur <- post.run.model.source.subs(df.models$model[kk],paste0(chr.dir.sub.models,"/", df.models$dir[kk]))
   df.out <- rbind(df.out,df.cur)
   rm(df.cur)
 }

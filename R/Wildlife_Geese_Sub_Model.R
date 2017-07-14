@@ -12,13 +12,13 @@
 #' the template are: YYYY is four-digit year, MM two-digit month,
 #' DD is the two-digit day, ## is an integer, #.# is a floating point
 #' number, and #.#E+## is a number in scientific notation
-#' @param chr.input.file is the input file for the model
+#' @param chr.file.input is the input file for the model
 #' @export
 
 wildlife.Geese <- function(chr.file.input) {
 
   ## read input files
-  df.input <- read.delim(chr.file.input, sep=":",
+  df.input <- utils::read.delim(chr.file.input, sep=":",
                          comment.char="*", stringsAsFactors=FALSE,
                          header=FALSE)
   names(df.input) <- c("parameter","value")
