@@ -1,6 +1,8 @@
-#' get reads in HSPF-sup-file and returns a long-format data.frame with accum and sqolim info
+#' merges HSPF-sup-file and pls line info then returns a long-format data.frame with accum and sqolim info
 #'
-#' @param chr.file.sup is the file name for the HSPF-sup-file (includes path if necessary)
+#' @param df.pls.line.info pls line info that correposnds to the HSPF-sup-file info from HSPF-uci-file
+#' @param df.sup.table the accum or sqolim loads from the sub-models for the update of sup file
+#' @param chr.sup.col.num.name the column name in df.sup.table that has the sup-file line numbers for the loads
 #' @export
 
 post.merge.pls.info.to.sup.table <- function(df.pls.line.info, df.df.sup.table, chr.sup.col.num.name) {

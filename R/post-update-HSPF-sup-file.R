@@ -1,6 +1,9 @@
-#' get reads in HSPF-sup-file and returns a long-format data.frame with accum and sqolim info
+#' updates the sup file (in a character vector) with the loads for each pls given the line info in the sup file
 #'
-#' @param chr.file.sup is the file name for the HSPF-sup-file (includes path if necessary)
+#' @param df.pls.line.info pls line info that correposnds to the HSPF-sup-file info from HSPF-uci-file
+#' @param chr.hspf.sup character vector containing the HSPF-sup-file with each each corresponding to a line of the file
+#' @param df.sup.table the accum or sqolim loads from the sub-models for the update of sup file
+#' @param chr.sup.col.num.name the column name in df.sup.table that has the sup-file line numbers for the loads
 #' @export
 
 post.update.HSPF.sup.file <- function(df.pls.line.info, chr.hspf.sup, df.sup.table, chr.sup.col.num.name) {

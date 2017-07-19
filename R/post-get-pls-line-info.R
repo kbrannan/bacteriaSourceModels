@@ -1,4 +1,4 @@
-#' get pls line info that correposnds to the HSPF-sup-file info from HSPF-uci-file
+#' get pls line info from HSPF-uci-file that correposnds to the HSPF-sup-file info
 #'
 #' @param chr.file.uci is the file name for the HSPF-uci-file (includes path if necessary)
 #' @export
