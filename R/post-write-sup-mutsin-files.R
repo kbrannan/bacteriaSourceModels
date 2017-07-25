@@ -11,20 +11,25 @@ df.seq.date.month <-data.frame(
 
 df.mut <- lst.updates[[2]]
 
-ii <- 1
+for(ii in 1:length(df.files.mut$file)) {
+  chr.cur.sub.wtsd <- df.files.mut[ii, ]
 
-chr.cur.sub.wtsd <- df.files.mut[ii, ]
+  df.cur.mut <- merge(df.seq.date.month,
+                      df.mut[grep(chr.cur.sub.wtsd$sub, df.mut$sub), c("Month", "load")],
+                      by = c("Month"))
+  df.cur.mut <- df.cur.mut[order(df.cur.mut$date), c("date", "load")]
 
-df.cur.mut <- merge(df.seq.date.month,
-                    df.mut[grep(chr.cur.sub.wtsd$sub, df.mut$sub), c("Month", "load")],
-                    by = c("Month"))
-df.cur.mut <- df.cur.mut[order(df.cur.mut$date), c("date", "load")]
+  chr.out.mut <- c("**** Direct Deposit Fecal Coliform Load",
+                   paste0("**** Watershed: ", chr.name.wtsd),
+                   paste0("**** Sub-watershed: ", chr.cur.sub.wtsd$sub),
+                   "      Year Mo Da Hr Mi   FC",
+                   paste0(strftime(df.cur.mut$date,
+                                   format = "      %Y %m %d 24 00   "),
+                          sprintf(fmt = "%.6E", df.cur.mut$load), sep = "")
+  )
+##  cat(chr.out.mut, file = paste0(chr.dir.hspf, "/", df.files.mut$file[ii]), sep = "\n")
+  con.mut.cur <-  file(paste0(chr.dir.hspf, "/", df.files.mut$file[ii]), "w")
+  writeLines(chr.out.mut, con.mut.cur)
+  close(con.mut.cur)
+}
 
-chr.out.mut <- c("**** Direct Deposit Fecal Coliform Load",
-                 paste0("**** Watershed: ", chr.name.wtsd),
-                 paste0("**** Sub-watershed: ", chr.cur.sub.wtsd$sub),
-                 "      Year Mo Da Hr Mi   FC",
-                 paste0(strftime(head(df.cur.mut$date, 10),
-                                 format = "      %Y %m %d 24 00   "),
-                        sprintf(fmt = "%.6E", head(df.cur.mut$load, 10)), sep = "")
-)
