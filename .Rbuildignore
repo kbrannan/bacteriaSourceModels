@@ -1,0 +1,5 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^.*\.docx$
+^.*scratch.*$
+^input.*scracth.*sheet.R$

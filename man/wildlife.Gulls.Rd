@@ -7,7 +7,7 @@
 wildlife.Gulls(chr.file.input)
 }
 \arguments{
-\item{chr.input.file}{is the input file for the model}
+\item{chr.file.input}{is the input file for the model}
 }
 \description{
 This function is the bacteria source-model gulls The model

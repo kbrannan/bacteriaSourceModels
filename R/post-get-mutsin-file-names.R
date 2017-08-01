@@ -3,6 +3,7 @@
 #'
 #' @param chr.dir.hspf path to loaction of hspf input files and where hspf is run
 #' @param chr.file.uci name of hspf-uci input file
+#' @importFrom stringr str_extract
 #' @export
 
 post.get.mutsin.file.names <- function(chr.dir.hspf, chr.file.uci) {
