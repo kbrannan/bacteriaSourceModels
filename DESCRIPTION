@@ -13,3 +13,7 @@ License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
+Imports: doBy,
+    reshape2,
+    stringr,
+    utils
