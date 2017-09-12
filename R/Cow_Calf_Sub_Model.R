@@ -149,7 +149,7 @@ cow.calf <- function(chr.file.input) {
     Bacteria.on.pasture.on.land = bac.pasture.wo + bac.pasture.w.lnd,
     Bacteria.on.pasture.to.stream = bac.pasture.w.strm,
     Bacteria.in.confinement = bac.confine,
-    Bacteria.in.forest.on.land = bac.forest.lnd + bac.forest.w.strm,
+    Bacteria.in.forest.on.land = bac.forest.wo + bac.forest.w.strm,
     Bacteria.in.forest.to.stream  = bac.forest.w.strm,
     Bacteria.direct.to.stream = bac.strm,
     Accum.pasture = accum.pasture,
