@@ -93,7 +93,7 @@ onsite.pets <- function(chr.file.input) {
   ## adjust load for structures near stream that may not have toilet facilities
   onsite.NearStrmStrctFailure.to.stream.load <- onsite.percent.to.stream * onsite.NearStrmStrctFailure.load
   if(lu.RAOCUT.area > 0) {
-    Accum.RAOCUT <- Accum.RAOCUT + (1- onsite.percent.to.stream) * onsite.NearStrmStrctFailure.load / lu.RAOCUT.area
+    Accum.RAOCUT <- Accum.RAOCUT + (1 - onsite.percent.to.stream) * onsite.NearStrmStrctFailure.load / lu.RAOCUT.area
   }
   ##
   ### Assemble output data frame
