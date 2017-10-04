@@ -1,7 +1,7 @@
-#' runs models and updates HSPF-sup file (with accum and sqolim info) and MUSTIN loads
-#' returns a list with the updated sup-file as a character vector with each row containing a line of the files and a data.frame for the MUTSIN loads
+#' runs models and updates HSPF files
 #'
-#' @param chr.dir.sub.models path to location of sub-model input files
+#' runs models and updates HSPF-sup file (with accum and sqolim info) and MUSTIN loads and returns a list with the updated sup-file as a character vector with each row containing a line of the files and a data.frame for the MUTSIN loads
+#' @param chr.dir.sub.models path to location of sub-model input files, default = NULL
 #' @param chr.dir.hspf path to loaction of hspf input files and where hspf is run
 #' @param chr.file.sup name of hspf-sup file
 #' @param chr.file.uci name of hspf-uci input file
@@ -24,7 +24,7 @@
 #'                          chr.dirs.sub.models, stringsAsFactors = FALSE)
 #'## End (No run)
 #' @export
-post.run.models.update.sup.mut <- function(chr.dir.sub.models, df.models, chr.dir.hspf, chr.file.sup, chr.file.uci) {
+post.run.models.update.sup.mut <- function(chr.dir.sub.models = NULL, df.models, chr.dir.hspf, chr.file.sup, chr.file.uci) {
   df.out <- data.frame()
   for(kk in 1:length(df.models$model)) {
     df.cur <- post.run.model.source.subs(df.models$model[kk]
